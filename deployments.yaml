@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
         - name: vote
-          image: europe-west9-docker.pkg.dev/login-k8s-454216/voting-image/vote
+          image: europe-west9-docker.pkg.dev/vote-454908/voting-image/vote
           ports:
             - containerPort: 5000
           readinessProbe:
@@ -94,7 +94,7 @@ spec:
     spec:
       containers:
         - name: result
-          image: europe-west9-docker.pkg.dev/login-k8s-454216/voting-image/result
+          image: europe-west9-docker.pkg.dev/vote-454908/voting-image/result
           ports:
             - containerPort: 3000
 ---
@@ -220,7 +220,7 @@ spec:
     spec:
       containers:
         - name: worker
-          image: europe-west9-docker.pkg.dev/login-k8s-454216/voting-image/worker
+          image: europe-west9-docker.pkg.dev/vote-454908/voting-image/worker
           env:
             - name: REDIS_HOST
               value: "redis"
@@ -272,6 +272,6 @@ spec:
     spec:
       containers:
         - name: seed
-          image: europe-west9-docker.pkg.dev/login-k8s-454216/voting-image/seed-data  # ✅ Fixed
+          image: europe-west9-docker.pkg.dev/vote-454908/voting-image/seed-data  
       restartPolicy: Never
   backoffLimit: 4
