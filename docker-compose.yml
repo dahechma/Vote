@@ -1,0 +1,130 @@
+version: "3.8"
+
+services:
+  vote:
+    image: europe-west9-docker.pkg.dev/login-k8s-454216/voting-image/vote
+    build:
+      context: ./vote
+    ports:
+      - "5000:5000"
+    networks:
+      - front-net
+      - back-net
+    depends_on:
+      - redis
+      - result
+<<<<<<< HEAD
+
+=======
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 10s
+
+  vote2:
+    build:
+      context: ./vote
+    ports:
+      - "5002:5000"
+    networks:
+      - front-net
+      - back-net
+    depends_on:
+      - redis
+      - result
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 10s
+
+  vote3:
+    build:
+      context: ./vote
+    ports:
+      - "5003:5000"
+    networks:
+      - front-net
+      - back-net
+    depends_on:
+      - redis
+      - result
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 10s
+>>>>>>> 76499f2d06311bc792eed65244c7402050ff0c6d
+
+  redis:
+    image: "redis:alpine"
+    networks:
+      - back-net
+
+  result:
+<<<<<<< HEAD
+    image: europe-west9-docker.pkg.dev/login-k8s-454216/voting-image/result
+=======
+    ports:
+      - "3000:3000"
+>>>>>>> 76499f2d06311bc792eed65244c7402050ff0c6d
+    build:
+      context: ./result
+    networks:
+      - front-net
+      - back-net
+    depends_on:
+      - db
+
+  worker:
+    image: europe-west9-docker.pkg.dev/login-k8s-454216/voting-image/worker
+    build: ./worker
+    networks:
+      - back-net
+    depends_on:
+      - redis
+      - db
+
+  db:
+    image: "postgres:15-alpine"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    networks:
+      - back-net
+
+  seed-data:
+    image: europe-west9-docker.pkg.dev/login-k8s-454216/voting-image/seed-data
+    build:
+      context: ./seed-data
+    networks:
+      - front-net
+    depends_on:
+      - db
+<<<<<<< HEAD
+      - vote 
+=======
+      - nginx
+>>>>>>> 76499f2d06311bc792eed65244c7402050ff0c6d
+
+  # nginx:
+  #   image: europe-west9-docker.pkg.dev/login-k8s-454216/voting-image/nginx
+  #   build:
+  #     context: ./nginx
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     - vote
+  #     - result
+  #   networks:
+  #     - front-net
+  #     - back-net
+
+networks:
+  front-net:
+  back-net:
