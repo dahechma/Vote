@@ -4,3 +4,4 @@
 *.tfvars
 *.tfvars.json
 *.jsonterraform-cluster/*.json
+terraform-cluster/*.json
