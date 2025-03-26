@@ -7,7 +7,7 @@ variable "region" {
 }
 
 variable "zone" {
-  description = "zone"
+  description = "europe-west9-a"
 }
 terraform {
   required_providers {
